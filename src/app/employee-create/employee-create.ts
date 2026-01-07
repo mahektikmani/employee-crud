@@ -139,7 +139,7 @@ export class EmployeeCreate implements OnInit {
 
     if (this.id) {
       this.service.update(this.id, formValue).subscribe({
-        next: () => this.router.navigate(['/']),
+        next: () => this.router.navigate(['/dashboard']),
         error: (err) => {
           console.error('Update error:', err);
           if (err.status === 401) {
@@ -155,7 +155,7 @@ export class EmployeeCreate implements OnInit {
       });
     } else {
       this.service.create(formValue).subscribe({
-        next: () => this.router.navigate(['/']),
+        next: () => this.router.navigate(['/dashboard']),
         error: (err) => {
           console.error('Create error:', err);
           console.error('Form data sent:', formValue);
@@ -175,6 +175,6 @@ export class EmployeeCreate implements OnInit {
 
 
   cancel() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/dashboard']);
   }
 }

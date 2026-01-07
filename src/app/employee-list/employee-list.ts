@@ -130,7 +130,9 @@ ngAfterViewInit(): void {
         this.prepareChartData();
 
         this.dataSource._updateChangeSubscription();
-
+setTimeout(() => {
+    this.initKTMenu();
+  }, 0);
  
         // setTimeout(() => {
         //   if ((window as any).KTMenu) {
@@ -483,7 +485,7 @@ toggleChart(): void {
     this.sortField = sort.active;
     this.sortDirection = sort.direction === '' ? 'asc' : sort.direction as 'asc' | 'desc';
     this.pageIndex = 0;
-    this.loadEmployees();
+    this.loadEmployees(); 
   }
 
   delete(employee: Employee): void {
@@ -533,7 +535,7 @@ private initKTMenu(): void {
   const KTMenu = (window as any).KTMenu;
   if (!KTMenu) return;
 
-  KTMenu.init();
+  
   KTMenu.createInstances('[data-kt-menu="true"]');
 }
 

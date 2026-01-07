@@ -51,15 +51,16 @@ export class App implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit(): void {
     this.initMetronic();
   }
-
-  ngOnInit(): void {
+ngOnInit(): void {
     this.checkAuth();
+   
+    const path = window.location.pathname;
+   
+    const isLoggedIn = this.authService.isLoggedIn();
 
-    const currentUrl = this.router.url;
     this.isAuthPage.set(
-      currentUrl.startsWith('/login') || currentUrl.startsWith('/register') 
-    ); 
-
+      !isLoggedIn || path.includes('/login') || path.includes('/register') || path === '/'
+    );
     this.sub = this.router.events
       .pipe(filter(e => e instanceof NavigationEnd))
       .subscribe((e: NavigationEnd) => {
