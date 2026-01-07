@@ -83,7 +83,7 @@ export class EmployeeCreate implements OnInit {
           experienceValue = parseInt(res.experience, 10) || 0;
         }
 
-        // Normalize department from API (e.g. "hr") to match select values ("HR")
+       
         let departmentValue = res.department || '';
         if (typeof departmentValue === 'string') {
           const trimmedDept = departmentValue.trim().toLowerCase();
@@ -111,13 +111,12 @@ export class EmployeeCreate implements OnInit {
     let formValue = { ...this.form.value };
 
 
-    // Date input already returns YYYY-MM-DD format, so we can use it directly
-    // Just ensure it's a string
+    
     if (formValue.joiningDate) {
       if (formValue.joiningDate instanceof Date) {
         formValue.joiningDate = formValue.joiningDate.toISOString().split('T')[0];
       } else if (typeof formValue.joiningDate === 'string') {
-        // Already in correct format from HTML date input
+        
         formValue.joiningDate = formValue.joiningDate;
       }
     }
@@ -140,7 +139,7 @@ export class EmployeeCreate implements OnInit {
 
     if (this.id) {
       this.service.update(this.id, formValue).subscribe({
-        next: () => this.router.navigate(['/dashboard']),
+        next: () => this.router.navigate(['/']),
         error: (err) => {
           console.error('Update error:', err);
           if (err.status === 401) {
@@ -156,7 +155,7 @@ export class EmployeeCreate implements OnInit {
       });
     } else {
       this.service.create(formValue).subscribe({
-        next: () => this.router.navigate(['/dashboard']),
+        next: () => this.router.navigate(['/']),
         error: (err) => {
           console.error('Create error:', err);
           console.error('Form data sent:', formValue);
@@ -176,6 +175,6 @@ export class EmployeeCreate implements OnInit {
 
 
   cancel() {
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/']);
   }
 }

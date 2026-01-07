@@ -16,7 +16,6 @@ import { CommonModule } from '@angular/common';
 import { filter, Subscription } from 'rxjs';
 import { AuthService } from './auth-service';
 
-/* Metronic globals (v8) */
 declare global {
   interface Window {
     KTUtil: any;
@@ -48,23 +47,18 @@ export class App implements OnInit, OnDestroy, AfterViewInit {
     private router: Router
   ) { }
 
-  /* Run once after Angular renders DOM */
+ 
   ngAfterViewInit(): void {
     this.initMetronic();
   }
 
   ngOnInit(): void {
     this.checkAuth();
-    // Initialize isAuthPage based on current route
-    // Initialize isAuthPage based on current window location to prevent flash
-    const path = window.location.pathname;
-    // If not logged in, assume it's an auth page (or we're about to be redirected to one)
-    // This prevents the dashboard layout from flashing when accessing protected routes while logged out
-    const isLoggedIn = this.authService.isLoggedIn();
 
+    const currentUrl = this.router.url;
     this.isAuthPage.set(
-      !isLoggedIn || path.includes('/login') || path.includes('/register') || path === '/'
-    );
+      currentUrl.startsWith('/login') || currentUrl.startsWith('/register') 
+    ); 
 
     this.sub = this.router.events
       .pipe(filter(e => e instanceof NavigationEnd))
@@ -77,25 +71,25 @@ export class App implements OnInit, OnDestroy, AfterViewInit {
 
         this.checkAuth();
 
-        // Re-init Metronic after route change
+  
         setTimeout(() => this.initMetronic(), 0);
       });
   }
 
-  /* Auth page check is handled by the signal in ngOnInit */
+ 
 
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
   }
 
-  /* -------- METRONIC INIT (v8) -------- */
+
   private initMetronic(): void {
     if (!window.KTUtil) {
-      console.warn('Metronic not loaded yet');
+      console.warn('Metronic not loaded yet'); 
       return;
     }
 
-    // Metronic v8 auto-init
+    
     if (window.KTApp) {
       window.KTApp.init();
     }
@@ -120,10 +114,10 @@ export class App implements OnInit, OnDestroy, AfterViewInit {
       window.KTSwapper.createInstances('[data-kt-swapper="true"]');
     }
 
-    console.log('✅ Metronic initialized');
+    console.log(' Metronic initialized');
   }
 
-  /* -------- AUTH -------- */
+
   private checkAuth(): void {
     this.isAuthenticated.set(this.authService.isLoggedIn());
   }
