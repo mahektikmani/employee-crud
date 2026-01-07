@@ -1,0 +1,8 @@
+/* CSS cleared to use Metronic global styles
+
+Fix: Remove unwanted arrow/chevron from dropdown menu items (like Delete)
+::ng-deep .menu-sub-dropdown .menu-item .menu-link::after {
+    display: none !important;
+    content: none !important;
+} */
+

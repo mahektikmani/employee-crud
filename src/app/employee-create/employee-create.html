@@ -1,0 +1,233 @@
+<!--begin::Toolbar-->
+<div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
+  <!--begin::Toolbar container-->
+  <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack px-0">
+    <!--begin::Page title-->
+    <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+      <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
+        {{ id ? 'Edit Employee' : 'Create Employee' }}
+      </h1>
+      <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+        <li class="breadcrumb-item text-muted">
+          <a href="/" class="text-muted text-hover-primary">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+          <span class="bullet bg-gray-500 w-5px h-2px"></span>
+        </li>
+        <li class="breadcrumb-item text-muted">
+          <a routerLink="/dashboard" class="text-muted text-hover-primary">Employees</a>
+        </li>
+        <li class="breadcrumb-item">
+          <span class="bullet bg-gray-500 w-5px h-2px"></span>
+        </li>
+        <li class="breadcrumb-item text-muted">{{ id ? 'Edit' : 'Create' }}</li>
+      </ul>
+    </div>
+    <div class="d-flex align-items-center gap-2 gap-lg-3">
+    </div>
+  </div>
+</div>
+<!--end::Toolbar-->
+
+<div class="card shadow-sm">
+  <div class="card-header border-0 pt-6">
+    <div class="card-title">
+      <h3 class="fw-bold">{{ id ? 'Modify Employee' : 'Add Employee' }}</h3>
+    </div>
+  </div>
+  <div class="card-body py-10">
+    <form [formGroup]="form" (ngSubmit)="save()" class="form" id="kt_modal_add_customer_form">
+      <!--begin::Scroll-->
+      <div class="scroll-y me-n7 pe-7" id="kt_modal_add_customer_scroll" data-kt-scroll="true"
+        data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto"
+        data-kt-scroll-dependencies="#kt_app_toolbar" data-kt-scroll-wrappers="#kt_modal_add_customer_scroll"
+        data-kt-scroll-offset="300px">
+
+        <!--begin::Input group (Name)-->
+        <div class="row g-9 mb-7">
+          <div class="col-md-6 fv-row">
+            <label class="required fs-6 fw-semibold mb-2">First Name</label>
+            <input type="text" class="form-control form-control-solid" placeholder="First Name"
+              formControlName="firstname" />
+            <div class="text-danger mt-2 fs-7"
+              *ngIf="form.controls['firstname'].invalid && (form.controls['firstname'].touched || form.controls['firstname'].dirty)">
+              First name is required
+            </div>
+          </div>
+          <div class="col-md-6 fv-row">
+            <label class="required fs-6 fw-semibold mb-2">Last Name</label>
+            <input type="text" class="form-control form-control-solid" placeholder="Last Name"
+              formControlName="lastname" />
+            <div class="text-danger mt-2 fs-7"
+              *ngIf="form.controls['lastname'].invalid && (form.controls['lastname'].touched || form.controls['lastname'].dirty)">
+              Last name is required
+            </div>
+          </div>
+        </div>
+        <!--end::Input group-->
+
+        <!--begin::Input group (Email)-->
+        <div class="fv-row mb-7">
+          <label class="fs-6 fw-semibold mb-2">
+            <span class="required">Email</span>
+            <span class="ms-1" data-bs-toggle="tooltip" title="Email address must be active">
+              <i class="ki-duotone ki-information fs-7">
+                <span class="path1"></span>
+                <span class="path2"></span>
+                <span class="path3"></span>
+              </i>
+            </span>
+          </label>
+          <input type="email" class="form-control form-control-solid" placeholder="Email Address"
+            formControlName="email" />
+          <div class="text-danger mt-2 fs-7"
+            *ngIf="form.controls['email'].hasError('required') && (form.controls['email'].touched || form.controls['email'].dirty)">
+            Email is required
+          </div>
+          <div class="text-danger mt-2 fs-7"
+            *ngIf="form.controls['email'].hasError('email') && (form.controls['email'].touched || form.controls['email'].dirty)">
+            Enter a valid email
+          </div>
+        </div>
+        <!--end::Input group-->
+
+        <!--begin::Input group (Contact & City)-->
+        <div class="row g-9 mb-7">
+          <div class="col-md-6 fv-row">
+            <label class="required fs-6 fw-semibold mb-2">Contact Number</label>
+            <input type="text" class="form-control form-control-solid" placeholder="Contact number"
+              formControlName="contactNo" />
+            <div class="text-danger mt-2 fs-7"
+              *ngIf="form.controls['contactNo'].invalid && (form.controls['contactNo'].touched || form.controls['contactNo'].dirty)">
+              Contact number is required
+            </div>
+          </div>
+          <div class="col-md-6 fv-row">
+            <label class="required fs-6 fw-semibold mb-2">City</label>
+            <input type="text" class="form-control form-control-solid" placeholder="City" formControlName="city" />
+            <div class="text-danger mt-2 fs-7"
+              *ngIf="form.controls['city'].invalid && (form.controls['city'].touched || form.controls['city'].dirty)">
+              City is required
+            </div>
+          </div>
+        </div>
+        <!--end::Input group-->
+
+        <!--begin::Input group (Experience & Department)-->
+        <div class="row g-9 mb-7 align-items-end">
+          <div class="col-md-6 fv-row">
+            <label class="required fs-6 fw-semibold mb-2">Department</label>
+            <select class="form-select form-select-solid fw-bold" formControlName="department">
+              <option value="">Select Department</option>
+              <option value="HR">HR</option>
+              <option value="Sales">Sales</option>
+              <option value="Development">Development</option>
+              <option value="Marketing">Marketing</option>
+            </select>
+            <div class="text-danger mt-2 fs-7"
+              *ngIf="form.controls['department'].invalid && (form.controls['department'].touched || form.controls['department'].dirty)">
+              Department is required
+            </div>
+          </div>
+          <div class="col-md-6 fv-row mb-3">
+            <label class="fs-6 fw-semibold mb-2">Experience ({{ form.get('experience')?.value }} Yrs)</label>
+            <input type="range" min="0" max="15" step="1" class="form-range" formControlName="experience" />
+          </div>
+        </div>
+        <!--end::Input group-->
+
+        <!--begin::Input group (Job Type & Skills)-->
+        <div class="row g-9 mb-7">
+          <div class="col-md-6 fv-row">
+            <label class="required fs-6 fw-semibold mb-3">Job Type</label>
+            <div class="d-flex align-items-center gap-5 mt-2">
+              <label class="form-check form-check-custom form-check-solid">
+                <input class="form-check-input" type="radio" value="fulltime" formControlName="jobType" />
+                <span class="form-check-label">Full-Time</span>
+              </label>
+              <label class="form-check form-check-custom form-check-solid">
+                <input class="form-check-input" type="radio" value="parttime" formControlName="jobType" />
+                <span class="form-check-label">Part-Time</span>
+              </label>
+              <label class="form-check form-check-custom form-check-solid">
+                <input class="form-check-input" type="radio" value="remote" formControlName="jobType" />
+                <span class="form-check-label">Remote</span>
+              </label>
+            </div>
+          </div>
+          <div class="col-md-6 fv-row" formGroupName="skills">
+            <label class="fs-6 fw-semibold mb-3">Skills</label>
+            <div class="d-flex flex-wrap gap-5 mt-2">
+              <label class="form-check form-check-sm form-check-custom form-check-solid">
+                <input type="checkbox" class="form-check-input" formControlName="leadership" />
+                <span class="form-check-label">Leadership</span>
+              </label>
+              <label class="form-check form-check-sm form-check-custom form-check-solid">
+                <input type="checkbox" class="form-check-input" formControlName="communication" />
+                <span class="form-check-label">Communication</span>
+              </label>
+              <label class="form-check form-check-sm form-check-custom form-check-solid">
+                <input type="checkbox" class="form-check-input" formControlName="technical" />
+                <span class="form-check-label">Technical</span>
+              </label>
+              <label class="form-check form-check-sm form-check-custom form-check-solid">
+                <input type="checkbox" class="form-check-input" formControlName="nontechnical" />
+                <span class="form-check-label">Non-Technical</span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <!--end::Input group-->
+
+        <!--begin::Billing toggle-->
+        <div class="fw-bold fs-3 rotate collapsible mb-7 mt-10" data-bs-toggle="collapse"
+          href="#kt_modal_add_customer_billing_info" role="button" aria-expanded="true">Additional Information
+          <span class="ms-2 rotate-180">
+            <i class="ki-duotone ki-down fs-3"></i>
+          </span>
+        </div>
+        <!--end::Billing toggle-->
+
+        <!--begin::Billing form-->
+        <div id="kt_modal_add_customer_billing_info" class="collapse show">
+          <!--begin::Input group-->
+          <div class="d-flex flex-column mb-7 fv-row">
+            <label class="required fs-6 fw-semibold mb-2">Joining Date</label>
+            <input type="date" class="form-control form-control-solid" formControlName="joiningDate" />
+            <div class="text-danger mt-2 fs-7"
+              *ngIf="form.controls['joiningDate'].invalid && (form.controls['joiningDate'].touched || form.controls['joiningDate'].dirty)">
+              Joining date is required
+            </div>
+          </div>
+          <!--end::Input group-->
+          <!--begin::Input group-->
+          <div class="d-flex flex-column mb-7 fv-row">
+            <label class="required fs-6 fw-semibold mb-2">Residential Address</label>
+            <textarea class="form-control form-control-solid" rows="3" placeholder="Residential Address"
+              formControlName="address"></textarea>
+            <div class="text-danger mt-2 fs-7"
+              *ngIf="form.controls['address'].invalid && (form.controls['address'].touched || form.controls['address'].dirty)">
+              Address is required
+            </div>
+          </div>
+          <!--end::Input group-->
+        </div>
+        <!--end::Billing form-->
+      </div>
+      <!--end::Scroll-->
+
+      <!--begin::Modal footer-->
+      <div class="modal-footer flex-center border-0 pt-10">
+        <!--begin::Button-->
+        <button type="button" (click)="cancel()" class="btn btn-light me-3">Discard</button>
+        <!--end::Button-->
+        <!--begin::Button-->
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+          <span class="indicator-label">{{ id ? 'Update Employee' : 'Submit' }}</span>
+        </button>
+        <!--end::Button-->
+      </div>
+      <!--end::Modal footer-->
+    </form>
+  </div>
+</div>
